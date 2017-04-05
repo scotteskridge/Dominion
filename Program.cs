@@ -9,14 +9,14 @@ namespace Dominion_Project{
         public static void Main(string[] args)
         {
             Console.WriteLine("Lets Start a new game of Dominion!");
+            PlayMat playMat1 = new PlayMat();
 
-            Player player1 = new Player("Scott");
+            Player player1 = new Player("Scott",playMat1);
             Console.WriteLine("You made a player1");
             System.Console.WriteLine(player1.Name);
-            Player player2 = new Player("Andy");
+            Player player2 = new Player("Andy",playMat1);
             Console.WriteLine("You made a player2");
             System.Console.WriteLine(player2.Name);
-            PlayMat playMat1 = new PlayMat();
             bool gameOn =  true;
             int switchPlayer = 1;
             while(gameOn == true){
@@ -35,13 +35,26 @@ namespace Dominion_Project{
                                 switchPhase = 2;
                             }
                         }else if(switchPhase == 2){
-                            if(player1.Buys != 0 && player1.Buying_Power != 0){
-                                Console.WriteLine("This is buy phase, input name of the card you want to buy from");
-                                string userInput =  GetUserString();
+                            bool buyphase = true;
+                            while (buyphase){
+                                foreach (var card in player1.player_hand){
+                                    if(card.Type == "Treasure"){
+                                        player1.Play_card(card);
+                                    }
+                                }
+                                if(player1.Buys != 0 && player1.Buying_Power != 0){
+                                    player1.DisplayState();
+                                    Console.WriteLine("This is buy phase, input name of the card you want to buy, or Pass");
+                                    string userInput =  GetUserString();
+                                    buyphase = player1.Buy_Phase(userInput);
+                                
+                                }else{
+                                    buyphase = false;
+                                }
 
-                            }else{
-                                switchPhase = 3;
                             }
+                            switchPhase = 3;
+
                         }else if(switchPhase == 3){
                             Console.WriteLine("This is clean Phase");
                             turnOn = false;

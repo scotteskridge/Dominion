@@ -75,7 +75,27 @@ namespace Dominion_Project{
         //10
         // Village village = new Village();
         public static Pile villages10 = new Pile(village, 10);
-        public PlayMat(){   
+
+        // Dictionary<string,Pile> AllCards = new Dictionary<string,Pile>();
+        List<Pile> AllCards = new List<Pile>();
+        public PlayMat(){  
+            AllCards.Add(estates ); 
+            AllCards.Add(duchies );
+            AllCards.Add(provinces );
+            AllCards.Add(coppers );
+            AllCards.Add(silvers );
+            AllCards.Add(golds );
+            AllCards.Add(villages1 );
+            AllCards.Add(villages2 );
+            AllCards.Add(villages3 );
+            AllCards.Add(villages4 );
+            AllCards.Add(villages5 );
+            AllCards.Add(villages6 );
+            AllCards.Add(villages7 );
+            AllCards.Add(villages8 );
+            AllCards.Add(villages9 );
+            AllCards.Add(villages10 );
+            AllCards.Add(curses );
             DisplayGameState();         
 
         }
@@ -98,6 +118,21 @@ namespace Dominion_Project{
             System.Console.WriteLine($"there are {villages8.Count} villages8 left");
             System.Console.WriteLine($"there are {villages9.Count} villages9 left");
             System.Console.WriteLine($"there are {villages10.Count} villages10 left");
+        }
+
+        public Card PickPile(string name){
+            foreach(var pile in AllCards){
+                if( pile.Name == name){
+                    Card bought_card = pile.cards[0];
+                    pile.cards.RemoveAt(0);
+                    pile.Count--;
+                    return bought_card;
+
+                }
+            }
+
+            return null;
+
         }
 
     }

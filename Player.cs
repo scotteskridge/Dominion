@@ -12,9 +12,11 @@ namespace Dominion_Project{
         public int Actions { get; set; }
         public int Buys { get; set; }
         public int Buying_Power { get; set; }
+        PlayMat playmat;
 
-        public Player(string name){
+        public Player(string name, PlayMat mat){
             Name = name;
+            playmat = mat;
             this.Actions = 1;
             this.Buys = 1;
             this.Buying_Power = 0;
@@ -35,7 +37,17 @@ namespace Dominion_Project{
             Card card = player_hand[inputIndex];
             Play_card(card);
         }
-        public void Buy_Phase(){
+        public bool Buy_Phase(string userInput){
+            if (userInput == "Pass"){
+                return false;
+            } else{
+            Card chosen_card = playmat.PickPile(userInput);
+            Buy_Card(chosen_card);
+            Buying_Power -= chosen_card.Cost;
+            Buys--;
+            return false;
+
+            }
 
         }
         public void CleanUp_Phase(){
@@ -48,6 +60,7 @@ namespace Dominion_Project{
         public Card Buy_Card(Card purchased_card)
         {
             Card Purchased_card = purchased_card; //this will need to be the card you bought passed in
+            
             played_cards.Add(Purchased_card);
             return Purchased_card;
         }
