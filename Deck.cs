@@ -14,6 +14,7 @@ namespace Dominion_Project
             for (int i = 0; i < 7; i ++){
                 cards.Add(new Copper());
             }
+            Shuffle();
 
         }
 

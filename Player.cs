@@ -19,12 +19,15 @@ namespace Dominion_Project{
             this.Buys = 1;
             this.Buying_Power = 0;
             this.player_discard_deck = new Deck(); //set the discard list to empty
+            player_discard_deck.cards.Clear();
             this.played_cards = new List<Card>(); //set the discard list to empty
             this.player_draw_deck = new Deck(); //Need to set this to 7 coppers and 3 estates
+            this.player_hand = new List<Card>();
            
             for (int i = 0; i< 5; i++){
                 Draw_Card();
             }
+            DisplayState();
         }
 
         public void Action_Phase()
