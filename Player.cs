@@ -23,7 +23,7 @@ namespace Dominion_Project{
             this.player_draw_deck = new Deck(); //Need to set this to 7 coppers and 3 estates
            
             for (int i = 0; i< 5; i++){
-                Draw_Card(player_draw_deck);
+                Draw_Card();
             }
         }
 
@@ -50,9 +50,9 @@ namespace Dominion_Project{
             return Purchased_card;
         }
 
-        public Card Draw_Card(Deck deck)
+        public Card Draw_Card()
         {
-            Card Drawn_card = deck.Draw();
+            Card Drawn_card = player_draw_deck.Draw();
             player_hand.Add(Drawn_card);
 
             return Drawn_card;
@@ -79,7 +79,7 @@ namespace Dominion_Project{
             Buying_Power += card.Buying_Power;
             if (card.Draws > 0){
                 for (int i = 0; i < card.Draws; i++){
-                    Draw_Card(player_draw_deck);
+                    Draw_Card();
                 }
             }
             card.OnPlay();

@@ -37,7 +37,7 @@ public class Village : Card{
         Buying_Power = 0;
         Draws = 1;
     }
-    public void OnPlay(){
+    new public void OnPlay(){
         System.Console.WriteLine("You you played a village");
 
     }
@@ -57,7 +57,7 @@ public class Copper : Card{
         Buying_Power = 1;
         Draws = 0;
     }
-    public void OnPlay(){
+    new public void OnPlay(){
         System.Console.WriteLine("You you played a Copper");
 
     }
@@ -78,7 +78,7 @@ public class Estate : Card{
         Buying_Power = 0;
         Draws = 0;
     }
-    public void OnPlay(){
+    new public void OnPlay(){
         System.Console.WriteLine("You you played a Estate");
 
     }

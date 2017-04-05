@@ -7,6 +7,8 @@ namespace Dominion_Project{
         {
             Console.WriteLine("Lets Start a new game of Dominion!");
             Player player1 = new Player("Scott");
+            Console.WriteLine("You made a player");
+            System.Console.WriteLine(player1.Name);
             Player player2 = new Player("Andy");
             bool gameOn =  true;
             int switchPlayer = 1;
