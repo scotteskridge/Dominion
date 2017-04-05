@@ -23,23 +23,22 @@ namespace Dominion_Project{
             this.played_cards = new List<Card>(); //set the discard list to empty
             this.player_draw_deck = new Deck(); //Need to set this to 7 coppers and 3 estates
             this.player_hand = new List<Card>();
-           
+
             for (int i = 0; i< 5; i++){
                 Draw_Card();
             }
             DisplayState();
         }
 
-        public void Action_Phase()
-        {
+        public void Action_Phase(int inputIndex){
+            Console.WriteLine(inputIndex);
+            Card card = player_hand[inputIndex];
+            Play_card(card);
+        }
+        public void Buy_Phase(){
 
         }
-        public void Buy_Phase()
-        {
-
-        }
-        public void CleanUp_Phase()
-        {
+        public void CleanUp_Phase(){
             foreach (Card card in played_cards)
             {
                 player_discard_deck.cards.Add(card);
