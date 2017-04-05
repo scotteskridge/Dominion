@@ -61,9 +61,40 @@ public class Copper : Card{
         System.Console.WriteLine("You you played a Copper");
 
     }
+}
+public class Silver : Card{
 
+    public Silver(){
+        Cost = 3;
+        Victory_Points = 0;
+        Type = "Treasure";
+        Name = "Silver";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 2;
+        Draws = 0;
+    }
+    new public void OnPlay(){
+        System.Console.WriteLine("You you played a Silver");
 
+    }
+}
+public class Gold : Card{
 
+    public Gold(){
+        Cost = 6;
+        Victory_Points = 0;
+        Type = "Treasure";
+        Name = "Gold";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 3;
+        Draws = 0;
+    }
+    new public void OnPlay(){
+        System.Console.WriteLine("You you played a Gold");
+
+    }
 }
 
 public class Estate : Card{
@@ -80,9 +111,53 @@ public class Estate : Card{
     }
     new public void OnPlay(){
         System.Console.WriteLine("You you played a Estate");
-
     }
+}
+public class Duchy : Card{
 
+    public Duchy(){
+        Cost = 5;
+        Victory_Points = 3;
+        Type = "Victory";
+        Name = "Duchy";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 0;
+    }
+    new public void OnPlay(){
+        System.Console.WriteLine("You you played a Duchy");
+    }
+}
+public class Province : Card{
 
+    public Province(){
+        Cost = 8;
+        Victory_Points = 6;
+        Type = "Victory";
+        Name = "Province";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 0;
+    }
+    new public void OnPlay(){
+        System.Console.WriteLine("You you played a Province");
+    }
+}
+public class Curse : Card{
 
+    public Curse(){
+        Cost = 0;
+        Victory_Points = -1;
+        Type = "Victory";
+        Name = "Curse";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 0;
+    }
+    new public void OnPlay(){
+        System.Console.WriteLine("You you played a Curse");
+    }
 }
