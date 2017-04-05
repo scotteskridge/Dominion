@@ -8,6 +8,12 @@ namespace Dominion_Project
         public List<Card> cards = new List<Card>();
 
         public Deck(){
+            for(int i = 0; i <3; i++){
+                cards.Add(new Estate());
+            }
+            for (int i = 0; i < 7; i ++){
+                cards.Add(new Copper());
+            }
 
         }
 

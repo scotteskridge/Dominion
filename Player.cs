@@ -21,6 +21,10 @@ namespace Dominion_Project{
             this.player_discard_deck = new Deck(); //set the discard list to empty
             this.played_cards = new List<Card>(); //set the discard list to empty
             this.player_draw_deck = new Deck(); //Need to set this to 7 coppers and 3 estates
+           
+            for (int i = 0; i< 5; i++){
+                Draw_Card(player_draw_deck);
+            }
         }
 
         public void Action_Phase()
@@ -46,13 +50,42 @@ namespace Dominion_Project{
             return Purchased_card;
         }
 
-        public Card Draw_Card()
+        public Card Draw_Card(Deck deck)
         {
-            Card drawn_card = player_draw_deck.Draw();
-            player_hand.Add(drawn_card);
+            Card Drawn_card = deck.Draw();
+            player_hand.Add(Drawn_card);
 
-            return drawn_card;
+            return Drawn_card;
 
+        }
+
+        public void DisplayState(){
+            System.Console.WriteLine($"it is {Name}'s turn:");
+            System.Console.WriteLine($"{Name} has:");
+            System.Console.WriteLine($"Actions: {Actions}");
+            System.Console.WriteLine($"Buys: {Buys}");
+            System.Console.WriteLine($"Buying Power: {Buying_Power}");
+            System.Console.WriteLine($"Cards in Hand:");
+            foreach (Card card in player_hand){
+                System.Console.WriteLine(card.Name);
+            }
+        }
+
+        public Card Play_card(Card card){
+            played_cards.Add(card);
+            player_hand.Remove(card);
+            Actions += card.More_Actions;
+            Buys += card.More_Buys;
+            Buying_Power += card.Buying_Power;
+            if (card.Draws > 0){
+                for (int i = 0; i < card.Draws; i++){
+                    Draw_Card(player_draw_deck);
+                }
+            }
+            card.OnPlay();
+            DisplayState();
+
+            return card;
         }
 
 
