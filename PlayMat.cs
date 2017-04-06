@@ -20,9 +20,14 @@ namespace Dominion_Project{
     }
     public class PlayMat
     {
+        //ok what I think i need to do is make a List of <pile> and then fill that list with new
+        //piles in my constructor funtion but its after 3 and time for bed
         public int EmptyPile =0;
-        public static Estate estate = new Estate();
-        public static Pile estates = new Pile(estate, 24);
+        public List<Card> TrashedCards = new List<Card>();
+        public List<Card> ActionCards = new List<Card>();
+        
+        // public static Estate estate = new Estate();
+        // public static Pile estates = new Pile(estate, 24);
         //make 3 piles of Victory cards
             
         
@@ -80,6 +85,8 @@ namespace Dominion_Project{
         // Dictionary<string,Pile> AllCards = new Dictionary<string,Pile>();
         public List<Pile> AllCards = new List<Pile>();
         public PlayMat(){  
+            Card estate = new Estate();
+            Pile estates = new Pile(estate, 24);
             AllCards.Add(estates ); 
             AllCards.Add(duchies );
             AllCards.Add(provinces );
@@ -97,7 +104,9 @@ namespace Dominion_Project{
             AllCards.Add(villages9 );
             AllCards.Add(villages10 );
             AllCards.Add(curses );
-            DisplayGameState();         
+            DisplayGameState();    
+
+            ActionCards.Add(new Village());     
 
         }
 

@@ -32,10 +32,39 @@ namespace Dominion_Project{
             DisplayState();
         }
 
-        public void Action_Phase(int inputIndex){
-            Console.WriteLine(inputIndex);
+        public void Action_Phase(int inputIndex, Player player){
             Card card = player_hand[inputIndex];
-            Play_card(card);
+            Play_card(card, player);
+        }
+         public Card Play_card(Card card, Player player){
+            played_cards.Add(card);
+            player_hand.Remove(card);
+            Actions += card.More_Actions;
+            Buys += card.More_Buys;
+            Buying_Power += card.Buying_Power;
+            if (card.Draws > 0){
+                for (int i = 0; i < card.Draws; i++){
+                    Draw_Card();
+                }
+            }
+            card.OnPlay(player);
+            return card;
+        }
+        public Card Discard(Card card){
+            player_hand.Remove(card);
+            player_discard_deck.cards.Add(card);
+            return card;
+        }
+         public Card DiscardFromDeck(){
+            Card card = player_draw_deck.cards[0];
+            player_draw_deck.cards.RemoveAt(0);
+            player_discard_deck.cards.Add(card);
+            return card;
+        }
+        public Card Trash(Card card){
+            player_hand.Remove(card);
+            playmat.TrashedCards.Add(card);
+            return card;
         }
         public bool Buy_Phase(string userInput){
             if (userInput == "Pass"){
@@ -122,27 +151,17 @@ namespace Dominion_Project{
             System.Console.WriteLine($"Buys: {Buys}");
             System.Console.WriteLine($"Buying Power: {Buying_Power}");
             System.Console.WriteLine($"Cards in Hand:");
-            foreach (Card card in player_hand){
-                System.Console.WriteLine(card.Name);
+           for(int i =0 ; i < player_hand.Count; i++){
+                System.Console.WriteLine($"{i+1} : {player_hand[i].Name}");
+            }
+        }
+        public void DisplayPlayerHand(){
+            for(int i = 0; i < player_hand.Count; i++){
+                System.Console.WriteLine($"{i+1} : {player_hand[i].Name}");
             }
         }
 
-        public Card Play_card(Card card){
-            played_cards.Add(card);
-            player_hand.Remove(card);
-            Actions += card.More_Actions;
-            Buys += card.More_Buys;
-            Buying_Power += card.Buying_Power;
-            if (card.Draws > 0){
-                for (int i = 0; i < card.Draws; i++){
-                    Draw_Card();
-                }
-            }
-            card.OnPlay();
-            DisplayState();
 
-            return card;
-        }
 
 
     }

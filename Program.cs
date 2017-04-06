@@ -1,23 +1,22 @@
 ﻿using System;
-using Microsoft.VisualBasic;
+
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Dominion_Project{
     public class Program{
-
-        public static Player ActivePlayer;
+       public static Player ActivePlayer;
         public static int NumberOfPlayers;
         public static List<Player> Players = new List<Player>();
-        public static void Main(string[] args)
+        public static void Main()
         {
             Console.WriteLine("Lets Start a new game of Dominion!");
+            bool gameOn = true;
             PlayMat playMat1 = new PlayMat();
             NumberOfPlayers= CreatePlayers(playMat1);
             ActivePlayer = Players[0];
-            bool gameOn =  true;
-            while(gameOn == true){
+            while(gameOn){
                 int playerindex =0;
                 Console.WriteLine($"It is now {ActivePlayer.Name}'s Turn");
                 bool turnOn = true;
@@ -26,9 +25,9 @@ namespace Dominion_Project{
                     if(switchPhase == 1){
                         if(ActivePlayer.Actions != 0){
                             ActivePlayer.DisplayState();
-                            Console.WriteLine("Action Phase input index of card you wanna play");
+                            Console.WriteLine("Enter the card number you'd like to play");
                             int userInput = Int32.Parse(GetUserString());
-                            ActivePlayer.Action_Phase(userInput);
+                            ActivePlayer.Action_Phase(userInput-1, ActivePlayer);
                             ActivePlayer.Actions -= 1;
                         }else{
                             switchPhase = 2;
@@ -38,11 +37,9 @@ namespace Dominion_Project{
                         while (buyphase){
                             foreach (var card in ActivePlayer.player_hand.ToList()){
                                 if(card.Type == "Treasure"){
-                                    ActivePlayer.Play_card(card);
-                                }else{
-                                    ActivePlayer.player_discard_deck.cards.Add(card);
-                                    ActivePlayer.player_hand.Remove(card);
-                                }
+                                    ActivePlayer.Play_card(card, ActivePlayer);
+                                } else ActivePlayer.Discard(card);
+                                
                             }
                             if(ActivePlayer.Buys != 0 && ActivePlayer.Buying_Power != 0){
                                 playMat1.DisplayGameState();
@@ -91,17 +88,15 @@ namespace Dominion_Project{
             return numplayers;
         }
         public static string GetUserString(){
-            while (true){
-
-           Console.WriteLine("Enter input:"); // Prompt
+            Console.WriteLine("Enter input:"); // Prompt
             string user_input = Console.ReadLine(); // Get string from user
-            if (user_input == "exit") // Check string
-            {
-                return user_input;
-            }
-             return user_input;
-            }
+            return user_input;
+        }
+        public static int ValidateInt(string input){
+            //do some code to validate user input the problem is I want to return the string if
+            //it fails the validation maybe return an object or dictionary?
 
+            return Int32.Parse(input);
         }
 
     }
