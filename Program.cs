@@ -25,6 +25,7 @@ namespace Dominion_Project{
                 while(turnOn){
                     if(switchPhase == 1){
                         if(ActivePlayer.Actions != 0){
+                            ActivePlayer.DisplayState();
                             Console.WriteLine("Action Phase input index of card you wanna play");
                             int userInput = Int32.Parse(GetUserString());
                             ActivePlayer.Action_Phase(userInput);
@@ -38,9 +39,13 @@ namespace Dominion_Project{
                             foreach (var card in ActivePlayer.player_hand.ToList()){
                                 if(card.Type == "Treasure"){
                                     ActivePlayer.Play_card(card);
+                                }else{
+                                    ActivePlayer.player_discard_deck.cards.Add(card);
+                                    ActivePlayer.player_hand.Remove(card);
                                 }
                             }
                             if(ActivePlayer.Buys != 0 && ActivePlayer.Buying_Power != 0){
+                                playMat1.DisplayGameState();
                                 ActivePlayer.DisplayState();
                                 Console.WriteLine("This is buy phase, input name of the card you want to buy, or Pass");
                                 string userInput =  GetUserString();
@@ -56,16 +61,17 @@ namespace Dominion_Project{
                     }else if(switchPhase == 3){
                         Console.WriteLine("This is cleanup Phase");
                         gameOn =  ActivePlayer.CleanUp_Phase();
+                        if (playerindex < NumberOfPlayers){
+                            playerindex++;
+                        }
+                        if(playerindex >= NumberOfPlayers){
+                            playerindex = 0;
+                        }
+                        ActivePlayer = Players[playerindex];
+                        switchPhase = 1;                       
                        
                     }
                 }
-                if (playerindex < NumberOfPlayers){
-                    playerindex++;
-                }else {
-                    playerindex = 0;
-                }
-                ActivePlayer = Players[playerindex];
-
                 
             }
         }

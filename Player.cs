@@ -64,18 +64,23 @@ namespace Dominion_Project{
         }
 
         public bool CleanUp_Phase(){
-            if (playmat.EmptyPile < 3){
+            if (playmat.EmptyPile > 2){
                 //do scoring phase
                 return false;
             }
-            foreach (Card card in played_cards){
-                player_discard_deck.cards.Add(card);
+            for (int i = 0; i < played_cards.Count; i++){
+                player_discard_deck.cards.Add(played_cards[0]);
+                played_cards.RemoveAt(0);
             }
             for (int i = 0; i <5; i++){
                 Draw_Card();
             }
+            Buying_Power = 0;
+            Actions = 1;
+            Buys = 1;
+
             DisplayState();
-            return false;
+            return true;
         }
 
         public Card Buy_Card(Card purchased_card)
@@ -91,9 +96,9 @@ namespace Dominion_Project{
             System.Console.WriteLine("You've drawn all of your cards");
             }
             else if(player_draw_deck.cards.Count == 0){
-                foreach (var card in player_discard_deck.cards){
-                    player_draw_deck.cards.Add(card);
-                    player_discard_deck.cards.Remove(card);
+                for(int i =0; i < player_discard_deck.cards.Count; i++){
+                    player_draw_deck.cards.Add(player_discard_deck.cards[0]);
+                    player_discard_deck.cards.RemoveAt(0);
                     player_draw_deck.Shuffle();
                 }
             Card Drawn_card = player_draw_deck.Draw();
