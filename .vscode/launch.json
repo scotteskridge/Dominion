@@ -6,12 +6,13 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/Dominion.dll",
+            "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp1.0\\Dominion.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
+            "internalConsoleOptions": "openOnSessionStart",
+            "externalConsole": true
         },
         {
             "name": ".NET Core Attach",

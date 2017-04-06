@@ -40,21 +40,42 @@ namespace Dominion_Project{
         public bool Buy_Phase(string userInput){
             if (userInput == "Pass"){
                 return false;
-            } else{
-            Card chosen_card = playmat.PickPile(userInput);
-            Buy_Card(chosen_card);
-            Buying_Power -= chosen_card.Cost;
-            Buys--;
-            return false;
-
             }
+            bool hasbought = false;
+             foreach(var pile in playmat.AllCards){
+                if (userInput == pile.Name){
+                    Card chosen_card = playmat.PickPile(userInput);
+                    if (chosen_card != null){
+                        Buy_Card(chosen_card);
+                        Buying_Power -= chosen_card.Cost;
+                        Buys--;
+                        hasbought = true;
+                        return true;
 
+                    } 
+
+                } 
+            }
+            if(hasbought == false){
+                System.Console.WriteLine("Please enter valid card name");
+            }
+                          
+        return true;
         }
-        public void CleanUp_Phase(){
-            foreach (Card card in played_cards)
-            {
+
+        public bool CleanUp_Phase(){
+            if (playmat.EmptyPile < 3){
+                //do scoring phase
+                return false;
+            }
+            foreach (Card card in played_cards){
                 player_discard_deck.cards.Add(card);
             }
+            for (int i = 0; i <5; i++){
+                Draw_Card();
+            }
+            DisplayState();
+            return false;
         }
 
         public Card Buy_Card(Card purchased_card)
@@ -65,13 +86,28 @@ namespace Dominion_Project{
             return Purchased_card;
         }
 
-        public Card Draw_Card()
-        {
+        public Card Draw_Card(){
+            if (player_draw_deck.cards.Count == 0 && player_discard_deck.cards.Count == 0 ){
+            System.Console.WriteLine("You've drawn all of your cards");
+            }
+            else if(player_draw_deck.cards.Count == 0){
+                foreach (var card in player_discard_deck.cards){
+                    player_draw_deck.cards.Add(card);
+                    player_discard_deck.cards.Remove(card);
+                    player_draw_deck.Shuffle();
+                }
+            Card Drawn_card = player_draw_deck.Draw();
+            player_hand.Add(Drawn_card);
+
+            return Drawn_card;
+            }else {
             Card Drawn_card = player_draw_deck.Draw();
             player_hand.Add(Drawn_card);
 
             return Drawn_card;
 
+            }
+            return null;
         }
 
         public void DisplayState(){

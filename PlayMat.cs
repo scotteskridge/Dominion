@@ -20,6 +20,7 @@ namespace Dominion_Project{
     }
     public class PlayMat
     {
+        public int EmptyPile =0;
         public static Estate estate = new Estate();
         public static Pile estates = new Pile(estate, 24);
         //make 3 piles of Victory cards
@@ -77,7 +78,7 @@ namespace Dominion_Project{
         public static Pile villages10 = new Pile(village, 10);
 
         // Dictionary<string,Pile> AllCards = new Dictionary<string,Pile>();
-        List<Pile> AllCards = new List<Pile>();
+        public List<Pile> AllCards = new List<Pile>();
         public PlayMat(){  
             AllCards.Add(estates ); 
             AllCards.Add(duchies );
@@ -123,10 +124,19 @@ namespace Dominion_Project{
         public Card PickPile(string name){
             foreach(var pile in AllCards){
                 if( pile.Name == name){
-                    Card bought_card = pile.cards[0];
-                    pile.cards.RemoveAt(0);
-                    pile.Count--;
-                    return bought_card;
+                    if( pile.Count > 0){
+                        Card bought_card = pile.cards[0];
+                        pile.cards.RemoveAt(0);
+                        pile.Count--;
+                        if (pile.Count == 0){
+                            EmptyPile++;
+                        }
+                        return bought_card;
+
+                    }else{
+                        System.Console.WriteLine("Pile is empty choose another card");
+                        return null;
+                    }
 
                 }
             }
