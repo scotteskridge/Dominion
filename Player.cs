@@ -5,6 +5,8 @@ namespace Dominion_Project{
 
     public class Player{
         public string Name { get; set; }
+
+        public int Score = 0;
         public Deck player_draw_deck;
         public Deck player_discard_deck;
         public List<Card> played_cards;
@@ -12,7 +14,7 @@ namespace Dominion_Project{
         public int Actions { get; set; }
         public int Buys { get; set; }
         public int Buying_Power { get; set; }
-        PlayMat playmat;
+        public PlayMat playmat;
 
         public Player(string name, PlayMat mat){
             Name = name;
@@ -50,6 +52,26 @@ namespace Dominion_Project{
             card.OnPlay(player);
             return card;
         }
+        public Card Trigger_card(Card card, Player player){
+            Actions += card.More_Actions;
+            Buys += card.More_Buys;
+            Buying_Power += card.Buying_Power;
+            if (card.Draws > 0){
+                for (int i = 0; i < card.Draws; i++){
+                    Draw_Card();
+                }
+            }
+            card.OnPlay(player);
+            return card;
+        }
+        public Card ChooseCard(){
+            // need validations in case of null card
+            System.Console.WriteLine("Choose a card");
+            DisplayPlayerHand();
+            int input = Int32.Parse(Program.GetUserString());
+            Card card = player_hand[input-1];
+            return card;
+        }
         public Card Discard(Card card){
             player_hand.Remove(card);
             player_discard_deck.cards.Add(card);
@@ -58,6 +80,10 @@ namespace Dominion_Project{
          public Card DiscardFromDeck(){
             Card card = player_draw_deck.cards[0];
             player_draw_deck.cards.RemoveAt(0);
+            player_discard_deck.cards.Add(card);
+            return card;
+        }
+        public Card Gain(Card card){ //gaining cards does not remove from piles but playmat.pickpile does
             player_discard_deck.cards.Add(card);
             return card;
         }
@@ -71,7 +97,7 @@ namespace Dominion_Project{
                 return false;
             }
             bool hasbought = false;
-             foreach(var pile in playmat.AllCards){
+             foreach(var pile in playmat.ThisGameCards){
                 if (userInput == pile.Name){
                     Card chosen_card = playmat.PickPile(userInput);
                     if (chosen_card != null){
@@ -91,10 +117,16 @@ namespace Dominion_Project{
                           
         return true;
         }
+        public Card Buy_Card(Card purchased_card){
+            Card Purchased_card = purchased_card; //this will need to be the card you bought passed in
+            
+            played_cards.Add(Purchased_card);
+            return Purchased_card;
+        }
 
         public bool CleanUp_Phase(){
             if (playmat.EmptyPile > 2){
-                //do scoring phase
+                Program.TallyScore();
                 return false;
             }
             for (int i = 0; i < played_cards.Count; i++){
@@ -112,13 +144,7 @@ namespace Dominion_Project{
             return true;
         }
 
-        public Card Buy_Card(Card purchased_card)
-        {
-            Card Purchased_card = purchased_card; //this will need to be the card you bought passed in
-            
-            played_cards.Add(Purchased_card);
-            return Purchased_card;
-        }
+        
 
         public Card Draw_Card(){
             if (player_draw_deck.cards.Count == 0 && player_discard_deck.cards.Count == 0 ){
@@ -126,6 +152,7 @@ namespace Dominion_Project{
             }
             else if(player_draw_deck.cards.Count == 0){
                 for(int i =0; i < player_discard_deck.cards.Count; i++){
+                    player_discard_deck.Shuffle();
                     player_draw_deck.cards.Add(player_discard_deck.cards[0]);
                     player_discard_deck.cards.RemoveAt(0);
                     player_draw_deck.Shuffle();
@@ -161,8 +188,18 @@ namespace Dominion_Project{
             }
         }
 
-
-
+        public bool CheckForDefence(){
+            foreach (var card in player_hand){
+                if (card.Type == "Reaction"){
+                    // ShowCard(card);
+                    return true;
+                }
+            }
+            return false;
+        }
+        // public Card ShowCard(Card card){
+        //     card.OnShow();
+        // } Need to have a method for showing your moat
 
     }
 }

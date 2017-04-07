@@ -19,6 +19,7 @@ namespace Dominion_Project{
             while(gameOn){
                 int playerindex =0;
                 Console.WriteLine($"It is now {ActivePlayer.Name}'s Turn");
+                TallyScore();
                 bool turnOn = true;
                 int switchPhase = 1;
                 while(turnOn){
@@ -92,11 +93,32 @@ namespace Dominion_Project{
             string user_input = Console.ReadLine(); // Get string from user
             return user_input;
         }
+        public static int GetUserInt(){
+            Console.WriteLine("Enter input:"); // Prompt
+            int user_input = Int32.Parse(Console.ReadLine()); // Get string from user
+            return user_input;
+        }
+
         public static int ValidateInt(string input){
             //do some code to validate user input the problem is I want to return the string if
             //it fails the validation maybe return an object or dictionary?
 
             return Int32.Parse(input);
+        }
+
+        public static void TallyScore(){
+            foreach (var player in Players){
+                foreach (var card in player.player_hand.ToList()){
+                    player.Discard(card);
+                }
+                for (int i = 0; i <player.player_draw_deck.cards.Count; i++){
+                    player.DiscardFromDeck();
+                }
+                foreach (var card in player.player_discard_deck.cards.ToList()){
+                    player.Score += card.Victory_Points;
+                }
+                System.Console.WriteLine($"{player.Name} scored: {player.Score}");
+            }
         }
 
     }

@@ -6,8 +6,8 @@ using Dominion_Project;
 namespace Dominion_Project{
     //Not sure if I want to implement each kingdom card as an instance of cards or if each kingdom card needs to be a child of card and its own class
     public class Card{
-       
-        public int Cost {get; set;}
+
+        public int Cost;
         public int Victory_Points {get; set;}
         public string Type {get; set;} // Action, Victory, Action - Attack, Action - Reaction, Treasure
         public string Name {get; set;}
@@ -162,6 +162,7 @@ public class Curse : Card{
         base.OnPlay(player);
    }
 }
+
 public class Village : Card{
     public Village(){
         Cost = 3;
@@ -261,6 +262,9 @@ public class Moat : Card{
      public override void OnPlay(Player player){
         base.OnPlay(player);
     }
+    public void OnShow(){
+
+    }
   
 }
 public class Chancellor : Card{
@@ -300,5 +304,187 @@ public class Woodcutter : Card{
         base.OnPlay(player);
    }
 }
+public class Workshop : Card{
+    public Workshop(){
+        Cost = 5;
+        Victory_Points = 0;
+        Type = "Attack";
+        Name = "Workshop";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 2;
+        Draws = 0;
+        Description = $"The {Name} let's you gain a card upto cost 4";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        System.Console.WriteLine("Name a card to gain that costs less than 4");
+        Card card = player.playmat.PickPile(Program.GetUserString());
+        player.Gain(card);
+    }
+}
+public class Feast : Card{
+    public Feast(){
+        Cost = 5;
+        Victory_Points = 0;
+        Type = "Attack";
+        Name = "Feast";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 2;
+        Draws = 0;
+        Description = $"The {Name} trashes it's self to gain a card upto 5 cost";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        System.Console.WriteLine("Name a card to gain that costs less than 5");
+        Card card = player.playmat.PickPile(Program.GetUserString());
+        player.Gain(card);
+        player.Trash(this);
+    }
+}
+
+public class Militia : Card{
+    public Militia(){
+        Cost = 4;
+        Victory_Points = 0;
+        Type = "Attack";
+        Name = "Militia";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 2;
+        Draws = 0;
+        Description = $"The {Name} gives you makes other players discard down to 3 cards";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        foreach(var otherplayer in Program.Players){
+            if (otherplayer!= player){
+                for (int i =3; i <otherplayer.player_hand.Count; i++){
+                Card card = otherplayer.ChooseCard();
+                otherplayer.Discard(card);
+
+                }
+            }
+        }
+   }
+}
+   public class Witch : Card{
+    public Witch(){
+        Cost = 5;
+        Victory_Points = 0;
+        Type = "Attack";
+        Name = "Witch";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 2;
+        Description = $"The {Name} gives  other players curses";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        foreach(var otherplayer in Program.Players){
+            if (otherplayer!= player){
+                Card curse = otherplayer.playmat.PickPile("Curse");
+                otherplayer.Gain(curse);
+
+                }
+            }
+        }
+   }
+   public class Moneylender : Card{
+    public Moneylender(){
+        Cost = 4;
+        Victory_Points = 0;
+        Type = "Action";
+        Name = "Moneylender";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 0;
+        Description = $"The {Name} let's you trash a copper to gain +3 coins";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        System.Console.WriteLine("Choose a copper from your hand");
+        // need validations in case of null card
+        // need validations for only coppers
+        // need validation to allow for passing
+        Card card = Program.ActivePlayer.ChooseCard();
+        player.Trash(card);
+        Program.ActivePlayer.Buying_Power += 3;
+    }
+}
+public class Smithy : Card{
+    public Smithy(){
+        Cost = 4;
+        Victory_Points = 0;
+        Type = "Action";
+        Name = "Smithy";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 3;
+        Description = $"The {Name} draws 3 more cards";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        
+    }
+}
+public class Throneroom : Card{
+    public Throneroom(){
+        Cost = 4;
+        Victory_Points = 0;
+        Type = "Action";
+        Name = "Throneroom";
+        More_Actions = 0;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 3;
+        Description = $"The {Name} let's you play an action twice";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+        System.Console.WriteLine("Choose an action to play twice");
+        Card card = Program.ActivePlayer.ChooseCard();
+        Program.ActivePlayer.Play_card(card, player);
+        Program.ActivePlayer.Trigger_card(card, player);
+    }
+}
+public class Festival : Card{
+    public Festival(){
+        Cost = 5;
+        Victory_Points = 0;
+        Type = "Action";
+        Name = "Festival";
+        More_Actions = 2;
+        More_Buys = 1;
+        Buying_Power = 2;
+        Draws = 0;
+        Description = $"The {Name} gives you more actions buys and coins";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+    }
+}
+public class Laboratory : Card{
+    public Laboratory(){
+        Cost = 5;
+        Victory_Points = 0;
+        Type = "Action";
+        Name = "Laboratory";
+        More_Actions = 1;
+        More_Buys = 0;
+        Buying_Power = 0;
+        Draws = 2;
+        Description = $"The {Name} gives you one more actions buys and coins";
+    }
+    public override void OnPlay(Player player){
+        base.OnPlay(player);
+    }
+}
+   
+
 
 } // end of namespace

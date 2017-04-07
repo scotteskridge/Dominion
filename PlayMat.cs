@@ -24,15 +24,48 @@ namespace Dominion_Project{
         //piles in my constructor funtion but its after 3 and time for bed
         public int EmptyPile =0;
         public List<Card> TrashedCards = new List<Card>();
-        public List<Card> ActionCards = new List<Card>();
+        public static List<Card> ActionCards = new List<Card>();
+        public static List<Card> PossibleCards = new List<Card>();
+      
+        public static Village village = new Village();
+        public static Cellar cellar = new Cellar();
+        public static Chapel chapel = new Chapel();
+        public static Moat moat = new Moat();
         
+        public static Chancellor chancellor = new Chancellor();
+        
+        public static Woodcutter woodcutter = new Woodcutter();
+        
+        public static Workshop workshop = new Workshop();
+        
+        public static Feast feast = new Feast();
+       
+        public static Militia militia = new Militia();
+        
+        public static Witch witch = new Witch();
+        
+        public static Moneylender moneylender = new Moneylender();
+        
+        public static Smithy smithy = new Smithy();
+        
+        public static Throneroom throneroom = new Throneroom();
+        
+        public static Festival festival = new Festival();
+        
+        public static Laboratory laboratory = new Laboratory();
+        
+        
+        //{"Village", "Cellar", "Chapel","Moat", "Chancellor", 
+        // "Woodcutter", "Workshop", "Feast", "Militia","Witch",
+        // "Moneylender", "Smithy", "Throneroom", "Festival", "Laboratory" };
         // public static Estate estate = new Estate();
         // public static Pile estates = new Pile(estate, 24);
         //make 3 piles of Victory cards
             
-        
+        public static Card estate = new Estate();
+        public static Pile estates = new Pile(estate, 24);
         public static Duchy duchy = new Duchy();
-            public static Pile duchies = new Pile(duchy, 12);
+        public static Pile duchies = new Pile(duchy, 12);
         public static Province province = new Province();
         public static Pile provinces = new Pile(province, 12);
 
@@ -46,101 +79,97 @@ namespace Dominion_Project{
         public static Pile silvers = new Pile(silver, 40);
         public static Gold gold = new Gold();
         public static Pile golds = new Pile(gold, 30);
+        public Pile ActionPiles;
 
         //make 10 piles of action cards
         //in the future make a for loop to grab 10 random 
         //cards from a dictionary of all possible action cards
 
-        //1
-        public static Village village = new Village();
-        public static Pile villages1 = new Pile(village, 10);
-        //2
-        // Village village = new Village();
-        public static Pile villages2 = new Pile(village, 10);
-        //3
-        // Village village = new Village();
-        public static Pile villages3 = new Pile(village, 10);
-        //4
-        // Village village = new Village();
-        Pile villages4 = new Pile(village, 10);
-        //5
-        // Village village = new Village();
-        public static Pile villages5 = new Pile(village, 10);
-        //6
-        // Village village = new Village();
-        public static Pile villages6 = new Pile(village, 10);
-        //7
-        // Village village = new Village();
-        public static Pile villages7 = new Pile(village, 10);
-        //8
-        // Village village = new Village();
-        public static Pile villages8 = new Pile(village, 10);
-        //9
-        // Village village = new Village();
-        public static Pile villages9 = new Pile(village, 10);
-        //10
-        // Village village = new Village();
-        public static Pile villages10 = new Pile(village, 10);
+        // //1
+        // public static Village village = new Village();
+        // public static Pile villages1 = new Pile(village, 10);
+        // //2
+        // // Village village = new Village();
+        // public static Pile villages2 = new Pile(village, 10);
+        // //3
+        // // Village village = new Village();
+        // public static Pile villages3 = new Pile(village, 10);
+        // //4
+        // // Village village = new Village();
+        // Pile villages4 = new Pile(village, 10);
+        // //5
+        // // Village village = new Village();
+        // public static Pile villages5 = new Pile(village, 10);
+        // //6
+        // // Village village = new Village();
+        // public static Pile villages6 = new Pile(village, 10);
+        // //7
+        // // Village village = new Village();
+        // public static Pile villages7 = new Pile(village, 10);
+        // //8
+        // // Village village = new Village();
+        // public static Pile villages8 = new Pile(village, 10);
+        // //9
+        // // Village village = new Village();
+        // public static Pile villages9 = new Pile(village, 10);
+        // //10
+        // // Village village = new Village();
+        // public static Pile villages10 = new Pile(village, 10);
 
         // Dictionary<string,Pile> AllCards = new Dictionary<string,Pile>();
-        public List<Pile> AllCards = new List<Pile>();
+        public List<Pile> ThisGameCards = new List<Pile>();
         public PlayMat(){  
-            Card estate = new Estate();
-            Pile estates = new Pile(estate, 24);
-            AllCards.Add(estates ); 
-            AllCards.Add(duchies );
-            AllCards.Add(provinces );
-            AllCards.Add(coppers );
-            AllCards.Add(silvers );
-            AllCards.Add(golds );
-            AllCards.Add(villages1 );
-            AllCards.Add(villages2 );
-            AllCards.Add(villages3 );
-            AllCards.Add(villages4 );
-            AllCards.Add(villages5 );
-            AllCards.Add(villages6 );
-            AllCards.Add(villages7 );
-            AllCards.Add(villages8 );
-            AllCards.Add(villages9 );
-            AllCards.Add(villages10 );
-            AllCards.Add(curses );
+            TrashedCards = new List<Card>();
+            
+            PossibleCards.Add(village);
+            PossibleCards.Add(cellar);
+            PossibleCards.Add(chapel);
+            PossibleCards.Add(moat);
+            PossibleCards.Add(chancellor);
+            PossibleCards.Add(woodcutter);
+            PossibleCards.Add(workshop);
+            PossibleCards.Add(feast);
+            PossibleCards.Add(militia);
+            PossibleCards.Add(witch);
+            PossibleCards.Add(moneylender);
+            PossibleCards.Add(smithy);
+            PossibleCards.Add(throneroom);
+            PossibleCards.Add(festival);
+            PossibleCards.Add(laboratory);
+            ActionCards = SetupActionsCards(PossibleCards);
+            ThisGameCards.Add(estates ); 
+            ThisGameCards.Add(duchies );
+            ThisGameCards.Add(provinces );
+            ThisGameCards.Add(curses );
+            ThisGameCards.Add(coppers );
+            ThisGameCards.Add(silvers );
+            ThisGameCards.Add(golds );
+            foreach (var card in ActionCards){
+                ActionPiles = new Pile(card, 10);
+                ThisGameCards.Add(ActionPiles);
+            }
+        
             DisplayGameState();    
-
-            ActionCards.Add(new Village());     
-
         }
 
         public void DisplayGameState(){
-            System.Console.WriteLine($"there are {estates.Count} Estates left");
-            System.Console.WriteLine($"there are {duchies.Count} duchies left");
-            System.Console.WriteLine($"there are {provinces.Count} provinces left");
-            System.Console.WriteLine($"there are {curses.Count} curses left");
-            System.Console.WriteLine($"there are {coppers.Count} coppers left");
-            System.Console.WriteLine($"there are {silvers.Count} silvers left");
-            System.Console.WriteLine($"there are {golds.Count} golds left");
-            System.Console.WriteLine($"there are {villages1.Count} villages1 left");
-            System.Console.WriteLine($"there are {villages2.Count} villages2 left");
-            System.Console.WriteLine($"there are {villages3.Count} villages3 left");
-            System.Console.WriteLine($"there are {villages4.Count} villages4 left");
-            System.Console.WriteLine($"there are {villages5.Count} villages5 left");
-            System.Console.WriteLine($"there are {villages6.Count} villages6 left");
-            System.Console.WriteLine($"there are {villages7.Count} villages7 left");
-            System.Console.WriteLine($"there are {villages8.Count} villages8 left");
-            System.Console.WriteLine($"there are {villages9.Count} villages9 left");
-            System.Console.WriteLine($"there are {villages10.Count} villages10 left");
+            foreach (var pile in ThisGameCards){
+                System.Console.WriteLine($"there are {pile.Count} {pile.Name}'s left");
+            }
+            
         }
 
         public Card PickPile(string name){
-            foreach(var pile in AllCards){
+            foreach(var pile in ThisGameCards){
                 if( pile.Name == name){
                     if( pile.Count > 0){
-                        Card bought_card = pile.cards[0];
+                        Card picked_card = pile.cards[0];
                         pile.cards.RemoveAt(0);
                         pile.Count--;
                         if (pile.Count == 0){
                             EmptyPile++;
                         }
-                        return bought_card;
+                        return picked_card;
 
                     }else{
                         System.Console.WriteLine("Pile is empty choose another card");
@@ -149,9 +178,28 @@ namespace Dominion_Project{
 
                 }
             }
-
             return null;
+        }
 
+        public List<Card> SetupActionsCards(List<Card> cardlist){
+            Random rand = new Random();
+            List<Card> shuffledlist = ShuffleList(cardlist);
+            List<Card> ChosenActions = new List<Card>();
+            for (int i = 0; i <10; i++){
+                ChosenActions.Add(shuffledlist[i]);
+            }
+        return ChosenActions;
+        }
+        public List<Card> ShuffleList(List<Card> cardlist){
+            Random rand = new Random();
+            List<Card> responcelist = cardlist;
+            for (int i = responcelist.Count-1; i >= 0; i--){
+                int j =rand.Next(0,i);
+                Card tempcard = responcelist[i]; 
+                responcelist[i]= responcelist[j];
+                responcelist[j]= tempcard;
+            }
+        return responcelist;
         }
 
     }
