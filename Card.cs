@@ -7,24 +7,24 @@ namespace Dominion_Project{
     //Not sure if I want to implement each kingdom card as an instance of cards or if each kingdom card needs to be a child of card and its own class
     public class Card{
 
-        public int Cost;
-        public int Victory_Points {get; set;}
-        public string Type {get; set;} // Action, Victory, Action - Attack, Action - Reaction, Treasure
-        public string Name {get; set;}
-        // public string Ability {get; set;} //This might need to be an object with methods?
-        public int More_Actions {get; set;}
-        public int More_Buys {get; set;}
-        public int Buying_Power {get; set;}
-        public int Draws {get; set;}
-        public string Description {get; set;}
+        public int Cost =0;
+        public int Victory_Points = 0;
+        public string Type; // Action, Victory, Action - Attack, Action - Reaction, Treasure
+        public string Name;
+        // public string Ability; //This might need to be an object with methods?
+        public int More_Actions;
+        public int More_Buys;
+        public int Buying_Power;
+        public int Draws;
+        public string Description;
 
         public Card(){
-
+            
         }
 
         public virtual void OnPlay(Player player){
         System.Console.WriteLine($"{player.Name} played a {Name}");
-    }
+        }   
 
         public Card ViewCard(){
             System.Console.WriteLine($"Name is:{this.Name}");
@@ -39,12 +39,20 @@ namespace Dominion_Project{
             
             return this;
         }
+        public Pile CreatePile(){
+           return new Pile(this, PileCount());
+        }
+        public virtual int PileCount(){
+        return 10;
+   }
 }
 
 
-public class Copper : Card{
 
-    public Copper(){
+
+public class Copper : Card{
+     public Copper(){
+        
         Cost = 1;
         Victory_Points = 0;
         Type = "Treasure";
@@ -57,6 +65,9 @@ public class Copper : Card{
     }
     public override void OnPlay(Player player){
         base.OnPlay(player);
+   }
+   public override int PileCount(){
+       return 60;
    }
 }
 public class Silver : Card{
@@ -258,6 +269,7 @@ public class Moat : Card{
         Buying_Power = 0;
         Draws = 2;
         Description = $"A {Name} protects you from attacks";
+
     }
      public override void OnPlay(Player player){
         base.OnPlay(player);

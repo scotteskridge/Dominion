@@ -23,6 +23,7 @@ namespace Dominion_Project{
                 bool turnOn = true;
                 int switchPhase = 1;
                 while(turnOn){
+                    TallyScore();
                     if(switchPhase == 1){
                         if(ActivePlayer.Actions != 0){
                             ActivePlayer.DisplayState();
@@ -107,17 +108,22 @@ namespace Dominion_Project{
         }
 
         public static void TallyScore(){
+
             foreach (var player in Players){
                 foreach (var card in player.player_hand.ToList()){
-                    player.Discard(card);
+                    player.Score += card.Victory_Points;
                 }
-                for (int i = 0; i <player.player_draw_deck.cards.Count; i++){
-                    player.DiscardFromDeck();
+                foreach (var card in player.played_cards.ToList()){
+                    player.Score += card.Victory_Points;
+                }
+                foreach (var card in player.player_draw_deck.cards.ToList()){
+                    player.Score += card.Victory_Points;
                 }
                 foreach (var card in player.player_discard_deck.cards.ToList()){
                     player.Score += card.Victory_Points;
                 }
                 System.Console.WriteLine($"{player.Name} scored: {player.Score}");
+                player.Score = 0;
             }
         }
 

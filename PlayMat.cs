@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dominion_Project;
 
+
 namespace Dominion_Project{
     public class Pile{
         public List<Card> cards = new List<Card>();
@@ -62,10 +63,11 @@ namespace Dominion_Project{
         // public static Pile estates = new Pile(estate, 24);
         //make 3 piles of Victory cards
             
-        public static Card estate = new Estate();
-        public static Pile estates = new Pile(estate, 24);
+        // public static Card estate = new Estate();
+        // public static Pile estates = new Pile(estate, 24);
         public static Duchy duchy = new Duchy();
         public static Pile duchies = new Pile(duchy, 12);
+        
         public static Province province = new Province();
         public static Pile provinces = new Pile(province, 12);
 
@@ -85,40 +87,13 @@ namespace Dominion_Project{
         //in the future make a for loop to grab 10 random 
         //cards from a dictionary of all possible action cards
 
-        // //1
-        // public static Village village = new Village();
-        // public static Pile villages1 = new Pile(village, 10);
-        // //2
-        // // Village village = new Village();
-        // public static Pile villages2 = new Pile(village, 10);
-        // //3
-        // // Village village = new Village();
-        // public static Pile villages3 = new Pile(village, 10);
-        // //4
-        // // Village village = new Village();
-        // Pile villages4 = new Pile(village, 10);
-        // //5
-        // // Village village = new Village();
-        // public static Pile villages5 = new Pile(village, 10);
-        // //6
-        // // Village village = new Village();
-        // public static Pile villages6 = new Pile(village, 10);
-        // //7
-        // // Village village = new Village();
-        // public static Pile villages7 = new Pile(village, 10);
-        // //8
-        // // Village village = new Village();
-        // public static Pile villages8 = new Pile(village, 10);
-        // //9
-        // // Village village = new Village();
-        // public static Pile villages9 = new Pile(village, 10);
-        // //10
-        // // Village village = new Village();
-        // public static Pile villages10 = new Pile(village, 10);
+        
 
         // Dictionary<string,Pile> AllCards = new Dictionary<string,Pile>();
         public List<Pile> ThisGameCards = new List<Pile>();
         public PlayMat(){  
+            // List<System.Type> silly = new List<System.Type>();
+            // silly.Add(typeof(Estate));
             TrashedCards = new List<Card>();
             
             PossibleCards.Add(village);
@@ -137,7 +112,7 @@ namespace Dominion_Project{
             PossibleCards.Add(festival);
             PossibleCards.Add(laboratory);
             ActionCards = SetupActionsCards(PossibleCards);
-            ThisGameCards.Add(estates ); 
+            ThisGameCards.Add(new Estate().CreatePile() ); 
             ThisGameCards.Add(duchies );
             ThisGameCards.Add(provinces );
             ThisGameCards.Add(curses );
